@@ -6,7 +6,6 @@
   <title>FloodEye - Advanced AI Flood Prediction Platform</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* Root variables remain unchanged */
     :root {
       --primary-color: #1e609e;
       --secondary-color: #0070d9;
@@ -20,13 +19,11 @@
       --border-radius: 16px;
       --border-radius-sm: 12px;
       --border-radius-xs: 8px;
-      --risk-critical: #8B0000; /* Dark Red */
-      --risk-high: #FF4500; /* Orange Red */
-      --risk-medium: #FFA500; /* Orange */
-      --risk-low: #1E90FF; /* Dodger Blue */
+      --risk-critical: #8B0000;
+      --risk-high: #FF4500;
+      --risk-medium: #FFA500;
+      --risk-low: #1E90FF;
     }
-
-    /* General body and typography */
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: radial-gradient(circle at 50% 50%, #0A0C1B 0%, #050611 100%);
@@ -35,8 +32,6 @@
       line-height: 1.6;
       margin: 0;
     }
-
-    /* Container */
     .container {
       max-width: 1400px;
       margin: 20px auto;
@@ -46,8 +41,6 @@
       overflow: hidden;
       padding: 0 15px;
     }
-
-    /* Header */
     .header {
       background: linear-gradient(135deg, var(--background-dark) 0%, var(--card-bg-dark) 100%);
       color: var(--text-light);
@@ -55,7 +48,6 @@
       text-align: center;
       position: relative;
     }
-
     .header::before {
       content: '';
       position: absolute;
@@ -64,12 +56,10 @@
       animation: shimmer 4s infinite;
       z-index: 0;
     }
-
     @keyframes shimmer {
       0% { transform: translateX(-100%); }
       100% { transform: translateX(100%); }
     }
-
     .header h1 {
       font-size: 3.5em;
       margin-bottom: 12px;
@@ -80,7 +70,6 @@
       color: var(--primary-color);
       text-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
     }
-
     .header p {
       font-size: 1.3em;
       margin-bottom: 25px;
@@ -88,7 +77,6 @@
       position: relative;
       z-index: 1;
     }
-
     .features-banner {
       display: flex;
       justify-content: center;
@@ -97,7 +85,6 @@
       position: relative;
       z-index: 1;
     }
-
     .feature-tag {
       background: rgba(0, 229, 255, 0.15);
       padding: 10px 20px;
@@ -109,14 +96,11 @@
       color: var(--primary-color);
       user-select: none;
     }
-
     .feature-tag:hover {
       background: rgba(0, 229, 255, 0.25);
       transform: translateY(-2px);
       box-shadow: 0 10px 25px var(--cyan-glow);
     }
-
-    /* Dashboard grid */
     .dashboard {
       display: grid;
       grid-template-columns: 1.4fr 1fr;
@@ -124,8 +108,6 @@
       padding: 40px 20px 60px;
       background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     }
-
-    /* Panels */
     .panel {
       background: var(--card-bg-light);
       border-radius: var(--border-radius);
@@ -134,12 +116,10 @@
       border: 1px solid rgba(0, 229, 255, 0.2);
       transition: all 0.3s ease;
     }
-
     .panel:hover {
       transform: translateY(-5px);
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), 0 0 50px var(--cyan-glow);
     }
-
     .panel h2 {
       font-size: 1.7em;
       margin-bottom: 25px;
@@ -149,8 +129,6 @@
       align-items: center;
       gap: 10px;
     }
-
-    /* Upload Zone */
     .upload-zone {
       border: 3px dashed var(--primary-color);
       border-radius: var(--border-radius);
@@ -210,8 +188,6 @@
     .upload-zone:hover .upload-text {
       color: var(--secondary-color);
     }
-
-    /* Analyze Button */
     .analyze-btn {
       background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
       color: var(--text-dark);
@@ -249,8 +225,6 @@
       cursor: not-allowed;
       transform: none;
     }
-
-    /* Canvas Container & Canvas */
     .canvas-container {
       position: relative;
       margin: 25px 0;
@@ -269,15 +243,12 @@
     #canvas:hover {
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15), 0 0 30px var(--cyan-glow);
     }
-
-    /* Prediction Timeline */
     .prediction-timeline {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 12px;
       margin: 25px 0;
     }
-
     .time-slot {
       text-align: center;
       padding: 18px 10px;
@@ -291,7 +262,6 @@
       color: var(--text-dark);
       user-select: none;
     }
-
     .time-slot::before {
       content: '';
       position: absolute;
@@ -300,12 +270,10 @@
       background: transparent;
       transition: background 0.3s ease;
     }
-
     .time-slot:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
-
     .time-slot.active {
       background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
       color: var(--text-dark);
@@ -338,8 +306,6 @@
     .time-slot.low-risk::before {
       background: var(--risk-low);
     }
-
-    /* Risk Map and Legend */
     .risk-map {
       background: var(--card-bg-light);
       border-radius: var(--border-radius-sm);
@@ -349,13 +315,11 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       user-select: none;
     }
-
     .risk-map h3 {
       margin-bottom: 20px;
       color: var(--text-dark);
       font-weight: 600;
     }
-
     .gis-legend {
       display: flex;
       justify-content: space-around;
@@ -363,7 +327,6 @@
       flex-wrap: wrap;
       gap: 15px;
     }
-
     .legend-item {
       display: flex;
       align-items: center;
@@ -372,10 +335,8 @@
       border-radius: 25px;
       font-size: 0.9em;
       font-weight: 600;
-      cursor: default;
       user-select: none;
     }
-
     .legend-item span {
       display: inline-block;
       width: 18px;
@@ -388,15 +349,12 @@
     .legend-medium span { background-color: var(--risk-medium); }
     .legend-low span { background-color: var(--risk-low); }
     .legend-safe span { background-color: #b0b0b0; }
-
-    /* Data sources grid */
     .data-sources {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 18px;
       margin: 25px 0;
     }
-
     .data-source {
       background: var(--card-bg-light);
       padding: 25px;
@@ -408,19 +366,16 @@
       overflow: hidden;
       user-select: none;
     }
-
     .data-source:hover {
       transform: translateY(-3px);
       box-shadow: 0 8px 30px var(--cyan-glow);
     }
-
     .data-source h4 {
       color: var(--secondary-color);
       margin-bottom: 12px;
       font-size: 1.1em;
       font-weight: 600;
     }
-
     .data-value {
       font-size: 2.15em;
       font-weight: 700;
@@ -428,21 +383,17 @@
       margin-bottom: 8px;
       line-height: 1.2;
     }
-
     .data-unit {
       color: var(--text-muted);
       font-size: 0.9em;
       font-weight: 500;
     }
-
-    /* Impact cards */
     .impact-assessment {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 18px;
       margin: 25px 0;
     }
-
     .impact-card {
       background: var(--card-bg-light);
       padding: 25px;
@@ -453,26 +404,21 @@
       border-top: 6px solid var(--primary-color);
       user-select: none;
     }
-
     .impact-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15), 0 0 30px var(--cyan-glow);
     }
-
     .impact-number {
       font-size: 2.8em;
       font-weight: 700;
       margin-bottom: 12px;
       line-height: 1.1;
     }
-
     .impact-label {
       color: var(--text-muted);
       font-size: 1.1em;
       font-weight: 500;
     }
-
-    /* Download buttons */
     .download-section {
       display: flex;
       gap: 18px;
@@ -480,7 +426,6 @@
       justify-content: center;
       flex-wrap: wrap;
     }
-
     .download-btn {
       background: linear-gradient(135deg, var(--background-dark) 0%, var(--card-bg-dark) 100%);
       color: var(--text-light);
@@ -497,7 +442,6 @@
       min-width: 140px;
       text-align: center;
     }
-
     .download-btn::before {
       content: '';
       position: absolute;
@@ -507,19 +451,15 @@
       transition: left 0.5s ease;
       pointer-events: none;
     }
-
     .download-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 25px var(--cyan-glow);
       background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
       color: var(--text-dark);
     }
-
     .download-btn:hover::before {
       left: 100%;
     }
-
-    /* Loading spinner */
     .loading {
       display: none;
       text-align: center;
@@ -529,7 +469,6 @@
       margin: 25px 0;
       border: 1px solid rgba(0, 229, 255, 0.2);
     }
-
     .spinner {
       border: 4px solid #f8f9fa;
       border-top: 4px solid var(--primary-color);
@@ -539,19 +478,15 @@
       animation: spin 1s linear infinite;
       margin: 0 auto 25px;
     }
-
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
     .loading p {
       color: var(--text-dark);
       font-size: 1.1em;
       font-weight: 500;
     }
-
-    /* Status messages */
     .status-message {
       padding: 18px 25px;
       border-radius: var(--border-radius-sm);
@@ -576,8 +511,6 @@
       color: var(--text-dark);
       border-left-color: var(--secondary-color);
     }
-
-    /* Analysis report */
     .analysis-report {
       background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
       border-radius: var(--border-radius-sm);
@@ -588,7 +521,6 @@
       font-size: 1em;
       user-select: text;
     }
-
     .report-section h3 {
       margin-bottom: 18px;
       font-size: 1.3em;
@@ -596,8 +528,6 @@
       padding-bottom: 10px;
       font-weight: 600;
     }
-
-    /* Responsive design improvements */
     @media (max-width: 1200px) {
       .container {
         margin: 10px;
@@ -612,7 +542,6 @@
         height: auto !important;
       }
     }
-
     @media (max-width: 768px) {
       .header {
         padding: 30px 20px 25px;
@@ -627,7 +556,7 @@
         font-size: 1.1em;
         padding: 18px 30px;
       }
-      .predict-timeline {
+      .prediction-timeline {
         grid-template-columns: repeat(3, 1fr);
         gap: 10px;
       }
@@ -647,7 +576,6 @@
         max-width: 280px;
       }
     }
-
     @media (max-width: 480px) {
       .header h1 {
         font-size: 2.2em;
@@ -690,7 +618,6 @@
     </div>
 
     <div class="dashboard">
-      <!-- Left panel: image upload & analysis -->
       <div class="panel">
         <h2>Image Analysis & Data Fusion</h2>
         <div class="upload-zone">
@@ -744,7 +671,6 @@
         </div>
       </div>
 
-      <!-- Right panel: prediction timeline, risk zones, impact -->
       <div class="panel">
         <h2>Flood Prediction Timeline</h2>
         <p style="margin-bottom: 20px; color: var(--text-muted); font-weight: 500;">
@@ -800,27 +726,19 @@
 
         <div class="impact-assessment">
           <div class="impact-card">
-            <div class="impact-number" id="populationAtRisk" style="color: var(--background-dark);">
-              --
-            </div>
+            <div class="impact-number" id="populationAtRisk" style="color: var(--background-dark);">--</div>
             <div class="impact-label">Population at Risk</div>
           </div>
           <div class="impact-card">
-            <div class="impact-number" id="assetsAtRisk" style="color: var(--primary-color);">
-              --
-            </div>
+            <div class="impact-number" id="assetsAtRisk" style="color: var(--primary-color);">--</div>
             <div class="impact-label">Assets at Risk ($M)</div>
           </div>
           <div class="impact-card">
-            <div class="impact-number" id="evacuationTime" style="color: var(--secondary-color);">
-              --
-            </div>
+            <div class="impact-number" id="evacuationTime" style="color: var(--secondary-color);">--</div>
             <div class="impact-label">Evacuation Time (hrs)</div>
           </div>
           <div class="impact-card">
-            <div class="impact-number" id="confidenceScore" style="color: var(--primary-color);">
-              --
-            </div>
+            <div class="impact-number" id="confidenceScore" style="color: var(--primary-color);">--</div>
             <div class="impact-label">Prediction Confidence</div>
           </div>
         </div>
@@ -841,7 +759,6 @@
     let loadedImage = null;
     let currentPrediction = null;
 
-    // On window resize, update canvas width for responsiveness
     function resizeCanvas() {
       if (!loadedImage) return;
       const containerWidth = canvas.parentElement.clientWidth;
@@ -849,9 +766,8 @@
       canvas.width = loadedImage.width * scale;
       canvas.height = loadedImage.height * scale;
       ctx.drawImage(loadedImage, 0, 0, canvas.width, canvas.height);
-      if(currentPrediction) displayFloodRiskZones(currentPrediction);
+      if (currentPrediction) displayFloodRiskZones(currentPrediction);
     }
-
     window.addEventListener('resize', resizeCanvas);
 
     function drawPlaceholder() {
@@ -870,17 +786,14 @@
     uploadInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
-
       if (!file.type.startsWith('image/')) {
         showStatus('Please select a valid image file', 'error');
         return;
       }
-
       if (file.size > 15 * 1024 * 1024) {
         showStatus('File size too large. Please select an image under 15MB', 'error');
         return;
       }
-
       const img = new Image();
       img.onload = () => {
         loadedImage = img;
@@ -900,13 +813,10 @@
         showStatus('Please upload an image first', 'error');
         return;
       }
-
       const file = uploadInput.files[0];
-
       showLoading(true);
       analyzeBtn.disabled = true;
       showStatus('Analyzing imagery and integrating multi-source data...', 'info');
-
       try {
         await simulateDataLoading();
         const base64Image = await fileToBase64(file);
@@ -944,8 +854,7 @@
     }
 
     async function performFloodAnalysis(base64Image) {
-      // FloodEye AI prompt and fetch API call as previously implemented
-      // For demo fallback, return predefined example
+      // Your real AI integration here; for demo fallback:
       return generateFallbackPrediction();
     }
 
@@ -993,8 +902,6 @@
         timeSlot.className = 'time-slot';
         switch(pred.risk_level) {
           case 'CRITICAL':
-            timeSlot.classList.add('high-risk');
-            break;
           case 'HIGH':
             timeSlot.classList.add('high-risk');
             break;
@@ -1028,43 +935,41 @@
           </div>
         </div>`;
 
-      // Redraw image and mark risk zones clearly
       displayFloodRiskZones(prediction);
     }
 
     function colorForRiskLevel(risk) {
       switch(risk.toUpperCase()) {
-        case 'CRITICAL': return 'rgba(139,0,0,0.6)'; // Dark Red
-        case 'HIGH': return 'rgba(255,69,0,0.5)';    // Orange Red
-        case 'MEDIUM': return 'rgba(255,165,0,0.5)';// Orange
-        case 'LOW': return 'rgba(30,144,255,0.4)';   // Dodger Blue
-        default: return 'rgba(0,255,255,0.2)';       // Cyan transparent default
+        case 'CRITICAL': return 'rgba(139,0,0,0.6)';
+        case 'HIGH': return 'rgba(255,69,0,0.5)';
+        case 'MEDIUM': return 'rgba(255,165,0,0.5)';
+        case 'LOW': return 'rgba(30,144,255,0.4)';
+        default: return 'rgba(0,255,255,0.2)';
       }
     }
 
     function displayFloodRiskZones(prediction) {
       if (!loadedImage || !canvas) return;
-
-      // Clear and redraw image scaled responsively
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(loadedImage, 0, 0, canvas.width, canvas.height);
-
       if (prediction && Array.isArray(prediction.risk_zones)) {
         ctx.font = 'bold 16px Arial';
         ctx.textBaseline = 'top';
+        const scaleX = canvas.width / loadedImage.width;
+        const scaleY = canvas.height / loadedImage.height;
         prediction.risk_zones.forEach(zone => {
+          const x = zone.x * scaleX;
+          const y = zone.y * scaleY;
+          const width = zone.width * scaleX;
+          const height = zone.height * scaleY;
           const col = colorForRiskLevel(zone.risk);
           ctx.fillStyle = col;
           ctx.strokeStyle = col;
           ctx.lineWidth = 3;
-          // Draw translucent fill
-          ctx.fillRect(zone.x, zone.y, zone.width, zone.height);
-          // Draw border
-          ctx.strokeRect(zone.x, zone.y, zone.width, zone.height);
-
-          // Label near top-left in contrasting color
+          ctx.fillRect(x, y, width, height);
+          ctx.strokeRect(x, y, width, height);
           ctx.fillStyle = 'white';
-          ctx.fillText(`${zone.risk.toUpperCase()} RISK`, zone.x + 4, zone.y + 4);
+          ctx.fillText(`${zone.risk.toUpperCase()} RISK`, x + 5, y + 5);
         });
       }
     }
@@ -1072,7 +977,6 @@
     function showLoading(show) {
       loading.style.display = show ? 'block' : 'none';
     }
-
     function showStatus(message, type) {
       statusMessage.textContent = message;
       statusMessage.className = `status-message status-${type}`;
@@ -1081,14 +985,12 @@
         setTimeout(() => statusMessage.style.display = 'none', 6000);
       }
     }
-
     function downloadPredictionMap() {
       const link = document.createElement('a');
       link.download = `FloodEye_GIS_Map_${new Date().toISOString().slice(0,10)}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     }
-
     function downloadReport() {
       if (!currentPrediction) {
         alert('Please run analysis first');
@@ -1101,7 +1003,6 @@
       link.href = URL.createObjectURL(blob);
       link.click();
     }
-
     function downloadTimeline() {
       if (!currentPrediction) {
         alert('Please run analysis first');
@@ -1114,7 +1015,6 @@
       link.href = URL.createObjectURL(blob);
       link.click();
     }
-
     function generateDetailedReport(prediction) {
       return `
 FLOODEYE COMPREHENSIVE FLOOD ANALYSIS REPORT
@@ -1157,7 +1057,6 @@ ${prediction.early_warning.recommended_actions.map((action, i) => `${i+1}. ${act
 This report was generated by FloodEye AI using advanced satellite imagery analysis, weather data integration, and hydrological modeling.
       `;
     }
-
     function generateTimelineCSV(prediction) {
       let csv = 'Hour,Risk Level,Probability (%),Population at Risk,Recommended Action\n';
       prediction.hourly_predictions.forEach(pred => {
@@ -1166,7 +1065,6 @@ This report was generated by FloodEye AI using advanced satellite imagery analys
       return csv;
     }
 
-    // Init logs
     console.log('FloodEye Advanced Flood Prediction System Ready');
     console.log('Multi-source data integration enabled');
     console.log('1-6 hour prediction capability active');
