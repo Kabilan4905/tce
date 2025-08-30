@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>FloodEye - Advanced AI Flood Prediction Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
         * {
             margin: 0;
@@ -627,12 +627,11 @@
             left: 100%;
         }
 
-        /* Enhanced responsive design */
+        /* Responsive Design */
         @media (max-width: 1200px) {
             .container {
                 margin: 15px;
             }
-            
             .dashboard {
                 grid-template-columns: 1fr;
                 gap: 25px;
@@ -644,46 +643,36 @@
             .header {
                 padding: 30px 20px;
             }
-            
             .header h1 {
                 font-size: 2.5em;
             }
-            
             .dashboard {
                 padding: 20px;
             }
-            
             .panel {
                 padding: 20px;
             }
-            
             .prediction-timeline {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 8px;
             }
-            
             .time-slot {
                 padding: 12px 8px;
             }
-            
             .features-banner {
                 gap: 8px;
             }
-            
             .feature-tag {
                 padding: 8px 12px;
                 font-size: 0.8em;
             }
-            
             .gis-legend {
                 justify-content: center;
             }
-            
             .download-section {
                 flex-direction: column;
                 align-items: center;
             }
-            
             .download-btn {
                 width: 100%;
                 max-width: 280px;
@@ -694,37 +683,29 @@
             .header h1 {
                 font-size: 2em;
             }
-            
             .header p {
                 font-size: 1.1em;
             }
-            
             .upload-zone {
                 padding: 30px 20px;
             }
-            
             .upload-icon {
                 font-size: 3.5em;
             }
-            
             .upload-text {
                 font-size: 1.1em;
             }
-            
             .data-sources {
                 grid-template-columns: 1fr;
             }
-            
             .impact-assessment {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
             .impact-number {
                 font-size: 2.2em;
             }
         }
 
-        /* Additional animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -763,10 +744,10 @@
         </div>
 
         <div class="dashboard">
-            <!-- Main Analysis Panel -->
+            <!-- Image Analysis Panel -->
             <div class="panel">
                 <h2>Image Analysis & Data Fusion</h2>
-                
+
                 <div class="upload-zone">
                     <div class="upload-icon">🛰️</div>
                     <div class="upload-text">Upload Satellite Image</div>
@@ -781,9 +762,9 @@
                     <div class="spinner"></div>
                     <p>Analyzing imagery and integrating data sources...</p>
                 </div>
-                
+
                 <div id="statusMessage" class="status-message"></div>
-                
+
                 <div class="canvas-container">
                     <canvas id="canvas"></canvas>
                 </div>
@@ -903,10 +884,8 @@
     </div>
 
     <script>
-        // Gemini API Key
         const GEMINI_API_KEY = 'AIzaSyBaZo97avjh6yZcgfd3izalIYELoTp3bb0';
-        
-        // Global variables
+
         const uploadInput = document.getElementById('imageUpload');
         const analyzeBtn = document.getElementById('analyzeBtn');
         const canvas = document.getElementById('canvas');
@@ -917,7 +896,6 @@
         let loadedImage = null;
         let currentPrediction = null;
 
-        // Initialize canvas
         canvas.width = 600;
         canvas.height = 400;
         drawPlaceholder();
@@ -932,7 +910,6 @@
             ctx.font = '16px Arial';
         }
 
-        // File upload handling
         uploadInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
@@ -949,11 +926,10 @@
 
             const img = new Image();
             img.onload = () => {
-                // Fit image to canvas maintaining aspect ratio
                 const maxWidth = 600;
                 const maxHeight = 400;
                 let { width, height } = img;
-                
+
                 if (width > maxWidth) {
                     height = (height * maxWidth) / width;
                     width = maxWidth;
@@ -962,7 +938,7 @@
                     width = (width * maxHeight) / height;
                     height = maxHeight;
                 }
-                
+
                 canvas.width = width;
                 canvas.height = height;
                 ctx.drawImage(img, 0, 0, width, height);
@@ -971,15 +947,14 @@
                 showStatus('Image loaded! Ready for comprehensive flood analysis.', 'success');
                 document.querySelector('.upload-text').textContent = `${file.name}`;
             };
-            
+
             img.onerror = () => {
                 showStatus('Failed to load image. Please try another file.', 'error');
             };
-            
+
             img.src = URL.createObjectURL(file);
         });
 
-        // Main analysis function
         analyzeBtn.addEventListener('click', async () => {
             if (!loadedImage) {
                 showStatus('Please upload an image first', 'error');
@@ -987,26 +962,22 @@
             }
 
             const file = uploadInput.files[0];
-            
+
             showLoading(true);
             analyzeBtn.disabled = true;
             showStatus('Analyzing imagery and integrating multi-source data...', 'info');
-            
+
             try {
-                // Simulate loading phases
                 await simulateDataLoading();
-                
-                // Convert image to base64
+
                 const base64Image = await fileToBase64(file);
-                
-                // Comprehensive flood analysis with Gemini
+
                 const prediction = await performFloodAnalysis(base64Image);
-                
-                // Update all dashboard components
+
                 updateDashboard(prediction);
-                
+
                 showStatus('Comprehensive flood analysis completed successfully!', 'success');
-                
+
             } catch (error) {
                 console.error('Analysis error:', error);
                 showStatus(`Analysis failed: ${error.message}`, 'error');
@@ -1019,7 +990,7 @@
         async function simulateDataLoading() {
             const dataElements = ['waterLevel', 'rainfall', 'riverFlow', 'elevation'];
             const simulatedData = ['2.3', '45', '1,250', '0.7'];
-            
+
             for (let i = 0; i < dataElements.length; i++) {
                 await new Promise(resolve => setTimeout(resolve, 500));
                 document.getElementById(dataElements[i]).textContent = simulatedData[i];
@@ -1038,9 +1009,7 @@
 
         async function performFloodAnalysis(base64Image) {
             const comprehensivePrompt = `
-            You are FloodEye AI, an advanced flood prediction system. Analyze this satellite/aerial/drone image for comprehensive flood risk assessment.
-
-            Provide detailed analysis in this EXACT JSON format:
+            You are FloodEye AI, an advanced flood prediction system. Analyze this satellite/aerial/drone image for comprehensive flood risk assessment.... Provide detailed analysis in this EXACT JSON format:
             {
                 "immediate_risk": "LOW/MEDIUM/HIGH/CRITICAL",
                 "flood_detected": true/false,
@@ -1121,7 +1090,7 @@
 
             const data = await response.json();
             const analysisText = data.candidates[0].content.parts[0].text;
-            
+
             try {
                 const jsonMatch = analysisText.match(/\{[\s\S]*\}/);
                 if (jsonMatch) {
@@ -1133,7 +1102,6 @@
                 console.error('Parse error:', parseError);
             }
 
-            // Fallback with enhanced demo data
             return generateFallbackPrediction(analysisText);
         }
 
@@ -1169,16 +1137,14 @@
         }
 
         function updateDashboard(prediction) {
-            // Update timeline
             prediction.hourly_predictions.forEach(pred => {
                 const timeSlot = document.querySelector(`[data-hour="${pred.hour}"]`);
                 const riskElement = document.getElementById(`risk-${pred.hour}`);
-                
+
                 riskElement.textContent = `${pred.probability}%`;
-                
-                // Apply risk-based styling
+
                 timeSlot.className = 'time-slot';
-                switch(pred.risk_level) {
+                switch (pred.risk_level) {
                     case 'CRITICAL': timeSlot.classList.add('high-risk'); break;
                     case 'HIGH': timeSlot.classList.add('high-risk'); break;
                     case 'MEDIUM': timeSlot.classList.add('medium-risk'); break;
@@ -1186,7 +1152,6 @@
                 }
             });
 
-            // Update impact assessment
             document.getElementById('populationAtRisk').textContent = 
                 (prediction.population_impact.at_risk || 0).toLocaleString();
             document.getElementById('assetsAtRisk').textContent = 
@@ -1196,12 +1161,10 @@
             document.getElementById('confidenceScore').textContent = 
                 `${((prediction.confidence_score || 0.8) * 100).toFixed(0)}%`;
 
-            // Update analysis content
             analysisContent.innerHTML = `
                 <div style="background: white; padding: 20px; border-radius: 8px; margin: 10px 0;">
                     <h4 style="color: var(--background-dark); margin-bottom: 15px;">🚨 ${prediction.immediate_risk} FLOOD RISK DETECTED</h4>
                     <p style="line-height: 1.6; margin-bottom: 15px; color: var(--text-dark);">${prediction.detailed_analysis}</p>
-                    
                     <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
                         <h5 style="color: var(--text-dark); margin-bottom: 10px;">⚠️ Immediate Actions Required:</h5>
                         <ul style="margin-left: 20px; color: var(--text-muted);">
@@ -1211,59 +1174,55 @@
                 </div>
             `;
 
-            // Create and display flood overlay
             displayAdvancedFloodOverlay(prediction);
         }
 
         function displayAdvancedFloodOverlay(prediction) {
-            // Redraw original image
             ctx.drawImage(loadedImage, 0, 0, canvas.width, canvas.height);
-            
-            // Create sophisticated flood visualization
+
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data = imageData.data;
-            
-            // Generate realistic flood patterns
+
             for (let y = 0; y < canvas.height; y++) {
                 for (let x = 0; x < canvas.width; x++) {
                     const index = (y * canvas.width + x) * 4;
-                    
-                    // Simulate flood areas based on various factors
-                    const distanceFromBottom = canvas.height - y;
-                    const centerDistance = Math.sqrt(Math.pow(x - canvas.width/2, 2) + Math.pow(y - canvas.height/2, 2));
-                    
+
                     let floodProbability = 0;
-                    
-                    // Higher probability near bottom (low elevation simulation)
-                    if (distanceFromBottom < canvas.height * 0.4) {
-                        floodProbability += 0.6;
+
+                    if (Math.sin(x * 0.05) * Math.cos(y * 0.03) > 0.3) {
+                        floodProbability += 0.5;
                     }
-                    
-                    // Scattered flood areas simulation
-                    if (Math.sin(x * 0.02) * Math.cos(y * 0.015) > 0.3) {
-                        floodProbability += 0.4;
-                    }
-                    
-                    if (floodProbability > 0.5 && Math.random() > 0.3) {
-                        // Apply cyan flood coloring with intensity based on risk
-                        const intensity = Math.min(floodProbability, 1.0);
-                        data[index] = Math.min(255, data[index] + intensity * 50);     // Slight red
-                        data[index + 1] = Math.min(255, data[index + 1] + intensity * 229); // Cyan blue-green
-                        data[index + 2] = Math.min(255, data[index + 2] + intensity * 255); // Cyan blue
-                        data[index + 3] = Math.max(200, data[index + 3]); // Alpha
+
+                    floodProbability += Math.random() * 0.4;
+
+                    floodProbability = Math.min(floodProbability, 1);
+
+                    if (floodProbability > 0.7) {
+                        const intensity = floodProbability;
+                        data[index] = Math.min(255, data[index] + intensity * 50);
+                        data[index + 1] = Math.min(255, data[index + 1] + intensity * 229);
+                        data[index + 2] = Math.min(255, data[index + 2] + intensity * 255);
+                        data[index + 3] = Math.max(200, data[index + 3]);
                     }
                 }
             }
-            
+
             ctx.putImageData(imageData, 0, 0);
-            
-            // Add risk zone annotations with cyan color
-            ctx.fillStyle = 'rgba(0, 229, 255, 0.9)';
-            ctx.font = 'bold 14px Arial';
-            ctx.fillText('HIGH RISK ZONE', 20, 30);
-            
-            ctx.fillStyle = 'rgba(0, 184, 217, 0.9)';
-            ctx.fillText('MEDIUM RISK', canvas.width - 120, 30);
+
+            if (prediction && prediction.risk_zones) {
+                ctx.fillStyle = 'rgba(0, 229, 255, 0.9)';
+                ctx.font = 'bold 14px Arial';
+                prediction.risk_zones.forEach(zone => {
+                    ctx.fillText(`${zone.risk} RISK ZONE`, zone.x + 5, zone.y + 20);
+                    ctx.strokeStyle = 'rgba(0, 229, 255, 0.6)';
+                    ctx.lineWidth = 3;
+                    ctx.strokeRect(zone.x, zone.y, zone.width, zone.height);
+                });
+            } else {
+                ctx.fillStyle = 'rgba(0, 229, 255, 0.9)';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('FLOOD RISK ZONES', 10, 30);
+            }
         }
 
         function showLoading(show) {
@@ -1279,7 +1238,6 @@
             }
         }
 
-        // Download functions
         function downloadPredictionMap() {
             const link = document.createElement('a');
             link.download = `FloodEye_GIS_Map_${new Date().toISOString().slice(0, 10)}.png`;
@@ -1292,7 +1250,7 @@
                 alert('Please run analysis first');
                 return;
             }
-            
+
             const report = generateDetailedReport(currentPrediction);
             const blob = new Blob([report], { type: 'text/plain' });
             const link = document.createElement('a');
@@ -1306,7 +1264,7 @@
                 alert('Please run analysis first');
                 return;
             }
-            
+
             const csvContent = generateTimelineCSV(currentPrediction);
             const blob = new Blob([csvContent], { type: 'text/csv' });
             const link = document.createElement('a');
@@ -1362,12 +1320,11 @@ weather data integration, and hydrological modeling.
         function generateTimelineCSV(prediction) {
             let csv = 'Hour,Risk Level,Probability (%),Population at Risk,Recommended Action\n';
             prediction.hourly_predictions.forEach(pred => {
-                csv += `+${pred.hour},${pred.risk_level},${pred.probability},${Math.floor(prediction.population_impact.at_risk * (pred.probability/100))},Monitor and prepare\n`;
+                csv += `+${pred.hour},${pred.risk_level},${pred.probability},${Math.floor(prediction.population_impact.at_risk * (pred.probability / 100))},Monitor and prepare\n`;
             });
             return csv;
         }
 
-        // Initialize the application
         console.log('FloodEye Advanced Flood Prediction System Ready');
         console.log('Multi-source data integration enabled');
         console.log('1-6 hour prediction capability active');
