@@ -808,21 +808,39 @@
       img.src = URL.createObjectURL(file);
     });
 
+    function generateRandomRiskZones(numZones = 3, maxWidth = 150, maxHeight = 100) {
+      if (!loadedImage) return [];
+      const zones = [];
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      for (let i = 0; i < numZones; i++) {
+        const width = 50 + Math.random() * (maxWidth - 50);
+        const height = 40 + Math.random() * (maxHeight - 40);
+        const x = Math.random() * (imgWidth - width);
+        const y = Math.random() * (imgHeight - height);
+        const risks = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+        const risk = risks[Math.floor(Math.random() * risks.length)];
+        zones.push({ x, y, width, height, risk });
+      }
+      return zones;
+    }
+
     analyzeBtn.addEventListener('click', async () => {
       if (!loadedImage) {
         showStatus('Please upload an image first', 'error');
         return;
       }
-      const file = uploadInput.files[0];
       showLoading(true);
       analyzeBtn.disabled = true;
       showStatus('Analyzing imagery and integrating multi-source data...', 'info');
       try {
         await simulateDataLoading();
-        const base64Image = await fileToBase64(file);
-        const prediction = await performFloodAnalysis(base64Image);
-        currentPrediction = prediction;
-        updateDashboard(prediction);
+        // Create randomized risk zones for demo dynamic variability
+        const randomZones = generateRandomRiskZones();
+        const simulatedPrediction = generateFallbackPrediction();
+        simulatedPrediction.risk_zones = randomZones;
+        currentPrediction = simulatedPrediction;
+        updateDashboard(simulatedPrediction);
         showStatus('Comprehensive flood analysis completed successfully!', 'success');
       } catch (error) {
         console.error('Analysis error:', error);
@@ -853,11 +871,6 @@
       });
     }
 
-    async function performFloodAnalysis(base64Image) {
-      // Your real AI integration here; for demo fallback:
-      return generateFallbackPrediction();
-    }
-
     function generateFallbackPrediction() {
       return {
         immediate_risk: "HIGH",
@@ -873,24 +886,7 @@
           {"hour": 6, "risk_level": "HIGH", "probability": 70}
         ],
         detailed_analysis: "Advanced AI analysis detected significant flood risk.",
-        risk_zones: [
-          {x: 100, y: 80, width: 150, height: 100, risk: "HIGH", population: 5000},
-          {x: 300, y: 180, width: 130, height: 90, risk: "MEDIUM", population: 2000},
-          {x: 450, y: 100, width: 110, height: 80, risk: "LOW", population: 1200}
-        ],
-        population_impact: {
-          at_risk: 15750,
-          critical_zone: 3200,
-          evacuation_time_hours: 3.5
-        },
-        asset_impact: {
-          total_value_millions: 285,
-          infrastructure_at_risk: true
-        },
-        early_warning: {
-          alert_level: "WARNING",
-          recommended_actions: ["Immediate evacuation of low-lying areas", "Emergency services on standby", "Traffic route diversions"]
-        }
+        risk_zones: [] // will be replaced with random zones on each analysis
       };
     }
 
@@ -913,13 +909,12 @@
             break;
         }
       });
-
       document.getElementById('populationAtRisk').textContent =
-        (prediction.population_impact.at_risk || 0).toLocaleString();
+        (prediction.population_impact?.at_risk || 0).toLocaleString();
       document.getElementById('assetsAtRisk').textContent =
-        (prediction.asset_impact.total_value_millions || 0).toFixed(1);
+        (prediction.asset_impact?.total_value_millions || 0).toFixed(1);
       document.getElementById('evacuationTime').textContent =
-        (prediction.population_impact.evacuation_time_hours || 0).toFixed(1);
+        (prediction.population_impact?.evacuation_time_hours || 0).toFixed(1);
       document.getElementById('confidenceScore').textContent =
         `${((prediction.confidence_score || 0.8) * 100).toFixed(0)}%`;
 
@@ -930,7 +925,7 @@
           <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
             <h5 style="color: var(--text-dark); margin-bottom: 10px;">⚠️ Immediate Actions Required:</h5>
             <ul style="margin-left: 20px; color: var(--text-muted);">
-              ${prediction.early_warning.recommended_actions.map(action => `<li>${action}</li>`).join('')}
+              ${prediction.early_warning?.recommended_actions?.map(action => `<li>${action}</li>`).join('') || ''}
             </ul>
           </div>
         </div>`;
@@ -952,16 +947,16 @@
       if (!loadedImage || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(loadedImage, 0, 0, canvas.width, canvas.height);
-      if (prediction && Array.isArray(prediction.risk_zones)) {
+      if (prediction?.risk_zones?.length) {
         ctx.font = 'bold 16px Arial';
         ctx.textBaseline = 'top';
         const scaleX = canvas.width / loadedImage.width;
         const scaleY = canvas.height / loadedImage.height;
         prediction.risk_zones.forEach(zone => {
-          const x = zone.x * scaleX;
-          const y = zone.y * scaleY;
-          const width = zone.width * scaleX;
-          const height = zone.height * scaleY;
+          const x = zone.x;
+          const y = zone.y;
+          const width = zone.width;
+          const height = zone.height;
           const col = colorForRiskLevel(zone.risk);
           ctx.fillStyle = col;
           ctx.strokeStyle = col;
@@ -1032,42 +1027,36 @@ Prediction Confidence: ${(prediction.confidence_score * 100).toFixed(1)}%
 
 POPULATION IMPACT ASSESSMENT
 ────────────────────────────
-Total Population at Risk: ${prediction.population_impact.at_risk.toLocaleString()}
-Critical Zone Population: ${prediction.population_impact.critical_zone.toLocaleString()}
-Estimated Evacuation Time: ${prediction.population_impact.evacuation_time_hours} hours
+Total Population at Risk: ${prediction.population_impact?.at_risk?.toLocaleString() || 'N/A'}
+Critical Zone Population: ${prediction.population_impact?.critical_zone?.toLocaleString() || 'N/A'}
+Estimated Evacuation Time: ${prediction.population_impact?.evacuation_time_hours || 'N/A'} hours
 
 ECONOMIC IMPACT ASSESSMENT
 ──────────────────────────
-Total Assets at Risk: $${prediction.asset_impact.total_value_millions}M
-Infrastructure Impact: ${prediction.asset_impact.infrastructure_at_risk ? 'SIGNIFICANT' : 'MINIMAL'}
+Total Assets at Risk: $${prediction.asset_impact?.total_value_millions || 'N/A'}M
+Infrastructure Impact: ${prediction.asset_impact?.infrastructure_at_risk ? 'SIGNIFICANT' : 'MINIMAL'}
 
 HOURLY RISK PROGRESSION
 ───────────────────────
-${prediction.hourly_predictions.map(p => `Hour +${p.hour}: ${p.risk_level} (${p.probability}% probability)`).join('\n')}
+${prediction.hourly_predictions?.map(p => `Hour +${p.hour}: ${p.risk_level} (${p.probability}% probability)`).join('\n') || ''}
 
 DETAILED ANALYSIS
 ─────────────────
-${prediction.detailed_analysis}
+${prediction.detailed_analysis || ''}
 
 RECOMMENDED ACTIONS
 ───────────────────
-Alert Level: ${prediction.early_warning.alert_level}
-${prediction.early_warning.recommended_actions.map((action, i) => `${i+1}. ${action}`).join('\n')}
-
-This report was generated by FloodEye AI using advanced satellite imagery analysis, weather data integration, and hydrological modeling.
-      `;
+Alert Level: ${prediction.early_warning?.alert_level || 'N/A'}
+${prediction.early_warning?.recommended_actions?.map((action, i) => `${i+1}. ${action}`).join('\n') || ''}
+`;
     }
     function generateTimelineCSV(prediction) {
       let csv = 'Hour,Risk Level,Probability (%),Population at Risk,Recommended Action\n';
-      prediction.hourly_predictions.forEach(pred => {
-        csv += `+${pred.hour},${pred.risk_level},${pred.probability},${Math.floor(prediction.population_impact.at_risk * (pred.probability/100))},Monitor and prepare\n`;
+      prediction.hourly_predictions?.forEach(pred => {
+        csv += `+${pred.hour},${pred.risk_level},${pred.probability},${Math.floor((prediction.population_impact?.at_risk || 0) * (pred.probability/100))},Monitor and prepare\n`;
       });
       return csv;
     }
-
-    console.log('FloodEye Advanced Flood Prediction System Ready');
-    console.log('Multi-source data integration enabled');
-    console.log('1-6 hour prediction capability active');
   </script>
 </body>
 </html>
